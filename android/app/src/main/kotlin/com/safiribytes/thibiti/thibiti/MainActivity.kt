@@ -1,4 +1,4 @@
-package com.safiribytes.thibiti.thibiti
+package com.safiribytes.thibiti
 
 import io.flutter.embedding.android.FlutterActivity
 
