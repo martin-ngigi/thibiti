@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:thibiti/features/auth/controller/auth_controller.dart';
 import 'package:thibiti/widgets/big_text.dart';
+import 'package:thibiti/widgets/custom_button.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -28,8 +29,12 @@ class _HomePageState extends State<HomePage> {
     return GetBuilder<AuthController>(builder: (authController){
       return Scaffold(
         body: Container(
+          width: MediaQuery.of(context).size.width,
+          // width: double.maxFinite,
+          // width: Get.width,
           padding: EdgeInsets.all(20),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               /// avatar
               Container(
@@ -47,7 +52,18 @@ class _HomePageState extends State<HomePage> {
               ),
 
               /// Name
-              BigText(text: authController.getUserObjectFromSP().name??"")
+              BigText(text: authController.getUserObjectFromSP().name??""),
+
+              SizedBox(height: 20,),
+
+              /// Logout
+              custom_button(
+                  buttonName: "Logout",
+                  onTapMethod: () async{
+                    authController.logout();
+                  },
+                  context: context
+              )
             ],
           ),
         ),

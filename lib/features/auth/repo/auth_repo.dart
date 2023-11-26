@@ -5,6 +5,7 @@ import '../../../global.dart';
 class AuthRepo{
   saveUserObjectToSP(String userObject) {
     Global.spStorage.storeString(key: AppConstants.USER_OBJECT, value: userObject);
+    Global.spStorage.storeString(key: AppConstants.ACCESS_TOKEN, value: "my access token");
   }
 
   getUserObjectFromSP() {

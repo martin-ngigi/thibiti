@@ -15,9 +15,12 @@ class AuthController extends GetxController implements GetxService{
     required this.authRepo
   });
 
+  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+
   signInWithApple() async{
     final appleProvider = AppleAuthProvider();
-    return await FirebaseAuth.instance.signInWithProvider(appleProvider);
+    return await _firebaseAuth.signInWithProvider(appleProvider);
   }
 
   handleSignIn(String type) async {
@@ -51,7 +54,6 @@ class AuthController extends GetxController implements GetxService{
           await asyncPostAllData(loginModel);
 
           print("DEBUG: Apple signin success");
-          print("DEBUG: id: $id, photoUrl: $photoUrl");
 
           ///Navigate to homepage
           Get.offNamed(RouteHelper.getHomePage());
@@ -86,5 +88,14 @@ class AuthController extends GetxController implements GetxService{
 
     return _userModel;
    }
+
+  void logout() {
+    LoginRequestModel userModel = getUserObjectFromSP();
+    if(userModel.type==4){
+      _firebaseAuth.signOut();
+    }
+    Global.spStorage.clearStorage();
+    Get.offNamed(RouteHelper.getLoginPage());
+  }
 
 }

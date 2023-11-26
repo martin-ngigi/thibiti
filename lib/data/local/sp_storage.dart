@@ -1,5 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../utils/app_constants.dart';
+
 class SpStorage{
   static late SharedPreferences sharedPreferences;
 
@@ -39,6 +41,11 @@ class SpStorage{
 
   Future<bool> clearStorage(){
     return sharedPreferences.clear();
+  }
+
+  bool getIsLoggedIn(){
+    /// if null, return false. else true
+    return sharedPreferences.getString(AppConstants.ACCESS_TOKEN)==null?false:true;
   }
 
 }
