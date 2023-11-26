@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:thibiti/global.dart';
 import 'package:thibiti/routes/route_helper.dart';
 import 'package:thibiti/utils/app_constants.dart';
-
+import 'package:google_sign_in/google_sign_in.dart';
 import '../model/login_request_model.dart';
 import '../repo/auth_repo.dart';
 
@@ -23,10 +23,38 @@ class AuthController extends GetxController implements GetxService{
     return await _firebaseAuth.signInWithProvider(appleProvider);
   }
 
-  handleSignIn(String type) async {
+  Future<GoogleSignInAccount?> signInWithGoogle() async {
+    GoogleSignIn googleSignIn = GoogleSignIn();
+    GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+    return googleUser;
+  }
+
+
+    handleSignIn(String type) async {
     try{
       if(type=="google"){
+        GoogleSignInAccount? user = await signInWithGoogle();
+        if(user != null){
+          String? displayName = user.displayName;
+          String? email = user.email;
+          String? id = user.id;
+          String? photoUrl = user.photoUrl??"https://static-00.iconduck.com/assets.00/user-avatar-icon-2048x2048-wpp8os2d.png";
 
+          LoginRequestModel loginModel = LoginRequestModel();
+          loginModel.avatar = photoUrl;
+          loginModel.name = displayName;
+          loginModel.email = email;
+          loginModel.openId = id;
+          loginModel.userType = "C";
+          loginModel.type = 2; /// type 2 means google login
+
+          await asyncPostAllData(loginModel);
+
+          print("DEBUG: Google signin success");
+
+          ///Navigate to homepage
+          Get.offNamed(RouteHelper.getHomePage());
+        }
       }
       else if(type=="phone"){
 
@@ -48,7 +76,7 @@ class AuthController extends GetxController implements GetxService{
           loginModel.email = email;
           loginModel.openId = id;
           loginModel.userType = "C";
-          loginModel.type = 4; /// type 3 means apple login
+          loginModel.type = 4; /// type 4 means apple login
 
 
           await asyncPostAllData(loginModel);
@@ -90,10 +118,10 @@ class AuthController extends GetxController implements GetxService{
    }
 
   void logout() {
-    LoginRequestModel userModel = getUserObjectFromSP();
-    if(userModel.type==4){
-      _firebaseAuth.signOut();
-    }
+    // LoginRequestModel userModel = getUserObjectFromSP();
+    // if(userModel.type==4){
+    // }
+    _firebaseAuth.signOut();
     Global.spStorage.clearStorage();
     Get.offNamed(RouteHelper.getLoginPage());
   }

@@ -44,10 +44,8 @@ class _HomePageState extends State<HomePage> {
                   // border: Border.all(
                   //   width: 1
                   // ),
-                    borderRadius: BorderRadius.circular(15)
-                ),
-                child: Image.network(
-                    authController.getUserObjectFromSP().avatar??""
+                    borderRadius: BorderRadius.circular(15),
+                  image: DecorationImage(image: NetworkImage(authController.getUserObjectFromSP().avatar??""))
                 ),
               ),
 

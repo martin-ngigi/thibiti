@@ -12,6 +12,5 @@ flutter login
 flutterfire config
 ```
 
-![image description](assets/login.png)
-OR
+## Screenshots
 <img src="assets/login.png" width="170" height="400"/>
