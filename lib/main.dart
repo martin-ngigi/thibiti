@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thibiti/features/auth/controller/auth_controller.dart';
 import 'package:thibiti/features/auth/login.dart';
 import 'package:thibiti/global.dart';
 import 'package:thibiti/routes/route_helper.dart';
@@ -8,6 +9,7 @@ import 'package:get/get.dart';
 Future<void> main() async {
   await Global.init();
   await dep.init();
+  //Get.find<AuthController>().getUserObjectFromSP();
   runApp(const MyApp());
 }
 
