@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:thibiti/features/auth/controller/auth_controller.dart';
 import 'package:thibiti/utils/constant_colors.dart';
 import 'package:thibiti/widgets/custom_button.dart';
 import 'package:thibiti/widgets/password_field.dart';
@@ -165,7 +166,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget loginMethod({required String type, required String icon}){
     return GestureDetector(
       onTap: () async{
-
+        AuthController authController = Get.find<AuthController>();
+        await authController.handleSignIn(type);
       },
       child: Container(
         width: 50,
